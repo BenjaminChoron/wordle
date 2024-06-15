@@ -32,17 +32,29 @@ describe('WordleBoard', () => {
     expect(wrapper.text()).toContain(DEFEAT_MESSAGE)
   })
 
-  test('no end-of-game message appears if the user has not yet made a guess', () => {
+  test('no end-of-game message appears if the user has not yet made a guess', async () => {
     expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
     expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
   })
 
-  test('If a word of the day provided does not have exactly 5 characters, a warning is emitted', () => {
+  test('If a word of the day provided does not have exactly 5 characters, a warning is emitted', async () => {
     console.warn = vi.fn()
 
     mount(WordleBoard, {
       props: {
         wordOfTheDay: 'FLY'
+      }
+    })
+
+    expect(console.warn).toHaveBeenCalled()
+  })
+
+  test('If a word of the day is not all in uppercase, a warning is emitted', async () => {
+    console.warn = vi.fn()
+
+    mount(WordleBoard, {
+      props: {
+        wordOfTheDay: 'tests'
       }
     })
 

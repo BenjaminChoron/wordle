@@ -5,7 +5,7 @@ import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings'
 defineProps({
   wordOfTheDay: {
     type: String,
-    validator: (wordGiven: string) => wordGiven.length === 5
+    validator: (wordGiven: string) => wordGiven.length === 5 && /^[A-Z]*$/.test(wordGiven)
   }
 })
 
