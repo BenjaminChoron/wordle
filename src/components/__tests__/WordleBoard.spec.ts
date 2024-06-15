@@ -40,15 +40,17 @@ describe('WordleBoard', () => {
   })
 
   describe('Rules for defining the word of the day', () => {
+    beforeEach(() => {
+      console.warn = vi.fn()
+    })
+
     test.each([
       { wordOfTheDay: 'FLY', reason: 'word-of-the-day must have 5 characters' },
       { wordOfTheDay: 'tests', reason: 'word-of-the-day must be all in uppercase' },
       { wordOfTheDay: 'AZERT', reason: 'word-of-the-day must be a valid English word' }
     ])(
-      'Since $reason: $wordOfTheDay is invalid, therefor a warning must be emitted',
+      'since $reason: $wordOfTheDay is invalid, therefor a warning must be emitted',
       async ({ wordOfTheDay }) => {
-        console.warn = vi.fn()
-
         mount(WordleBoard, {
           props: {
             wordOfTheDay
@@ -60,8 +62,6 @@ describe('WordleBoard', () => {
     )
 
     test('no warning is emitted if the word of the day provided is a real uppercase English word with 5 characters', async () => {
-      console.warn = vi.fn()
-
       mount(WordleBoard, {
         props: {
           wordOfTheDay: 'TESTS'
