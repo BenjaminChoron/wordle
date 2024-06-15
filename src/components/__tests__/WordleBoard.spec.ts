@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings'
+import { DEFEAT_MESSAGE, VICTORY_MESSAGE, WORD_SIZE } from '@/settings'
 
 describe('WordleBoard', () => {
   const wordOfTheDay = 'TESTS'
@@ -45,7 +45,7 @@ describe('WordleBoard', () => {
     })
 
     test.each([
-      { wordOfTheDay: 'FLY', reason: 'word-of-the-day must have 5 characters' },
+      { wordOfTheDay: 'FLY', reason: `word-of-the-day must have ${WORD_SIZE} characters` },
       { wordOfTheDay: 'tests', reason: 'word-of-the-day must be all in uppercase' },
       { wordOfTheDay: 'AZERT', reason: 'word-of-the-day must be a valid English word' }
     ])(
@@ -61,7 +61,7 @@ describe('WordleBoard', () => {
       }
     )
 
-    test('no warning is emitted if the word of the day provided is a real uppercase English word with 5 characters', async () => {
+    test(`no warning is emitted if the word of the day provided is a real uppercase English word with ${WORD_SIZE} characters`, async () => {
       mount(WordleBoard, {
         props: {
           wordOfTheDay: 'TESTS'
@@ -73,7 +73,7 @@ describe('WordleBoard', () => {
   })
 
   describe('Player input', () => {
-    test('player guesses are limited to 5 letters', async () => {
+    test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitsGuess(wordOfTheDay + 'EXTRA')
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
