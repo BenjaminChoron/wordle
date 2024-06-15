@@ -3,10 +3,11 @@ import WordleBoard from '../WordleBoard.vue'
 import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings'
 
 describe('WordleBoard', () => {
+  const wordOfTheDay = 'TESTS'
   test('a victory message appears when the user makes a guess that matches the word of the day', async () => {
     const wrapper = mount(WordleBoard, {
       props: {
-        wordOfTheDay: 'TESTS'
+        wordOfTheDay
       }
     })
 
@@ -20,7 +21,7 @@ describe('WordleBoard', () => {
   test('a defeat message appears if the user makes a guess that is incorrect', async () => {
     const wrapper = mount(WordleBoard, {
       props: {
-        wordOfTheDay: 'TESTS'
+        wordOfTheDay
       }
     })
 
