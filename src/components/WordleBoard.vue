@@ -20,6 +20,7 @@ const guessSubmitted = ref('')
     <p
       v-if="guessSubmitted.length > 0"
       v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
+      class="end-of-game-message"
     />
   </main>
 </template>
