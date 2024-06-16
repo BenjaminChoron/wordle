@@ -37,6 +37,15 @@ describe('WordleBoard', () => {
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
     })
+
+    test('resetting the game clears the end-of-game message', async () => {
+      await playerSubmitsGuess('TESTS')
+      await wrapper.find('button').trigger('click')
+
+      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
+    })
+
+    test.todo('resetting the game clears the player input')
   })
 
   describe('Rules for defining the word of the day', () => {
