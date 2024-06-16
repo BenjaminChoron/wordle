@@ -30,6 +30,9 @@ const onReset = () => {
 <template>
   <main>
     <h1 class="title">Wordle</h1>
+    <ul>
+      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">{{ guess }}</li>
+    </ul>
     <GuessInput
       @guessSubmitted="(guess) => guessesSubmitted.push(guess)"
       :clearInput="clearInput"
