@@ -28,6 +28,7 @@ const onSubmit = () => {
   if (!englishWords.includes(guessInProgress.value)) return
 
   emit('guessSubmitted', guessInProgress.value)
+  guessInProgress.value = ''
 }
 
 watch(
