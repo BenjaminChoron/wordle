@@ -29,7 +29,8 @@ const isGameOver = computed(
         <GuessView :guess="guess" />
       </li>
     </ul>
-    <GuessInput @guessSubmitted="(guess) => guessesSubmitted.push(guess)" />
+    <GuessInput :disabled="isGameOver" @guessSubmitted="(guess) => guessesSubmitted.push(guess)" />
+
     <p
       v-if="isGameOver"
       v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
