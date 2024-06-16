@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import GuessInput from '@/components/GuessInput.vue'
 import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
+import GuessView from './GuessView.vue'
 
 const props = defineProps({
   wordOfTheDay: {
@@ -31,7 +32,9 @@ const onReset = () => {
   <main>
     <h1 class="title">Wordle</h1>
     <ul>
-      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">{{ guess }}</li>
+      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
+        <GuessView :guess="guess" />
+      </li>
     </ul>
     <GuessInput
       @guessSubmitted="(guess) => guessesSubmitted.push(guess)"
@@ -54,20 +57,34 @@ main {
   align-items: center;
   gap: 2rem;
 }
+
 .title {
   font-size: 3rem;
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
 .end-of-game {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .message {
   font-size: 3rem;
   animation: end-of-game-message-animation 700ms forwards;
   white-space: nowrap;
   text-align: center;
 }
+
 @keyframes end-of-game-message-animation {
   0% {
     opacity: 0;
@@ -78,6 +95,7 @@ main {
     transform: translateY(2rem);
   }
 }
+
 .reset-btn {
   margin-top: 2rem;
   padding: 1rem 2rem;
@@ -88,6 +106,7 @@ main {
   cursor: pointer;
   transition: background-color 200ms;
 }
+
 .reset-btn:hover {
   background-color: hsl(0, 0%, 80%);
 }
