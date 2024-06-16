@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DEFEAT_MESSAGE, VICTORY_MESSAGE, WORD_SIZE } from '@/settings'
+import GuessInput from '@/components/GuessInput.vue'
+import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
 
 defineProps({
@@ -10,34 +11,11 @@ defineProps({
   }
 })
 
-const guessInProgress = ref('')
 const guessSubmitted = ref('')
-
-const onInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const rawValue = target.value
-  const filteredValue = rawValue
-    .slice(0, WORD_SIZE)
-    .toUpperCase()
-    .replace(/[^A-Z]+/gi, '')
-  target.value = filteredValue
-  guessInProgress.value = filteredValue
-}
-
-const onSubmit = () => {
-  if (!englishWords.includes(guessInProgress.value)) return
-  guessSubmitted.value = guessInProgress.value
-}
 </script>
 
 <template>
-  <input
-    v-model="guessInProgress"
-    maxlength="WORD_SIZE"
-    type="text"
-    @input="onInput"
-    @keydown.enter="onSubmit"
-  />
+  <GuessInput @guessSubmitted="(guess) => (guessSubmitted = guess)" />
   <p
     v-if="guessSubmitted.length > 0"
     v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
