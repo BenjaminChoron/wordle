@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { WORD_SIZE } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import GuessView from '@/components/GuessView.vue'
-
-const props = defineProps<{
-  clearInput: boolean
-}>()
 
 const guessInProgress = ref('')
 
@@ -31,15 +27,6 @@ const onSubmit = () => {
   emit('guessSubmitted', guessInProgress.value)
   guessInProgress.value = ''
 }
-
-watch(
-  () => props.clearInput,
-  (clearInput) => {
-    if (clearInput) {
-      guessInProgress.value = ''
-    }
-  }
-)
 </script>
 
 <template>

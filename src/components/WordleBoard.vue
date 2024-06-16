@@ -12,8 +12,6 @@ const props = defineProps({
     validator: (wordGiven: string) => englishWords.includes(wordGiven)
   }
 })
-
-const clearInput = ref(false)
 const guessesSubmitted = ref<string[]>([])
 
 const isGameOver = computed(
@@ -21,11 +19,6 @@ const isGameOver = computed(
     guessesSubmitted.value.length === MAX_GUESSES_COUNT ||
     guessesSubmitted.value.includes(props.wordOfTheDay)
 )
-
-const onReset = () => {
-  clearInput.value = !clearInput.value
-  guessesSubmitted.value = []
-}
 </script>
 
 <template>
@@ -36,17 +29,12 @@ const onReset = () => {
         <GuessView :guess="guess" />
       </li>
     </ul>
-    <GuessInput
-      @guessSubmitted="(guess) => guessesSubmitted.push(guess)"
-      :clearInput="clearInput"
+    <GuessInput @guessSubmitted="(guess) => guessesSubmitted.push(guess)" />
+    <p
+      v-if="isGameOver"
+      v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
+      class="message"
     />
-    <div v-if="isGameOver" class="end-of-game">
-      <p
-        v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
-        class="message"
-      />
-      <button @click="onReset" class="reset-btn">Play again</button>
-    </div>
   </main>
 </template>
 
@@ -72,12 +60,6 @@ li {
   margin-bottom: 0.25rem;
 }
 
-.end-of-game {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .message {
   font-size: 3rem;
   animation: end-of-game-message-animation 700ms forwards;
@@ -94,20 +76,5 @@ li {
     opacity: 1;
     transform: translateY(2rem);
   }
-}
-
-.reset-btn {
-  margin-top: 2rem;
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
-  background-color: hsl(0, 0%, 90%);
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 200ms;
-}
-
-.reset-btn:hover {
-  background-color: hsl(0, 0%, 80%);
 }
 </style>
