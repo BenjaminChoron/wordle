@@ -28,8 +28,8 @@ defineProps<{
 .letter {
   background-color: white;
   border: 1px solid hsl(0, 0%, 70%);
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;

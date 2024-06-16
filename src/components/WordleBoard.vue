@@ -53,14 +53,17 @@ const countOfEmptyGuesses = computed(() => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NL:wght@100..400&display=swap');
+
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  font-family: Roboto, sans-serif;
 }
 
 .title {
+  font-family: 'Playwrite NL', cursive;
   font-size: 3rem;
 }
 
@@ -75,10 +78,17 @@ li {
 }
 
 .message {
-  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  font-size: 2rem;
   animation: end-of-game-message-animation 700ms forwards;
   white-space: nowrap;
   text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: hsl(0, 0%, 85%);
+  box-shadow: 0 0 0.5rem 0.25rem rgba(0, 0, 0, 0.3);
 }
 
 @keyframes end-of-game-message-animation {
