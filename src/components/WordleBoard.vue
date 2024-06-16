@@ -11,9 +11,11 @@ defineProps({
   }
 })
 
+const clearInput = ref(false)
 const guessSubmitted = ref('')
 
 const onReset = () => {
+  clearInput.value = !clearInput.value
   guessSubmitted.value = ''
 }
 </script>
@@ -21,7 +23,7 @@ const onReset = () => {
 <template>
   <main>
     <h1 class="title">Wordle</h1>
-    <GuessInput @guessSubmitted="(guess) => (guessSubmitted = guess)" />
+    <GuessInput @guessSubmitted="(guess) => (guessSubmitted = guess)" :clearInput="clearInput" />
     <div v-if="guessSubmitted.length > 0" class="end-of-game">
       <p
         v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE"

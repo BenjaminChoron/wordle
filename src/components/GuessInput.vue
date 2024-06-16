@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { WORD_SIZE } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
+import { ref, watch } from 'vue'
+
+const props = defineProps<{
+  clearInput: boolean
+}>()
 
 const guessInProgress = ref('')
+
 const emit = defineEmits<{
   guessSubmitted: [guess: string]
 }>()
@@ -24,6 +29,15 @@ const onSubmit = () => {
 
   emit('guessSubmitted', guessInProgress.value)
 }
+
+watch(
+  () => props.clearInput,
+  (clearInput) => {
+    if (clearInput) {
+      guessInProgress.value = ''
+    }
+  }
+)
 </script>
 
 <template>
