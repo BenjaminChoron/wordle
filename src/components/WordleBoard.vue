@@ -7,26 +7,33 @@ import englishWords from '@/englishWordsWith5Letters.json'
 defineProps({
   wordOfTheDay: {
     type: String,
+    required: true,
     validator: (wordGiven: string) => englishWords.includes(wordGiven)
   }
 })
 
 const clearInput = ref(false)
-const guessSubmitted = ref('')
+const guessesSubmitted = ref<string[]>([])
 
 const onReset = () => {
   clearInput.value = !clearInput.value
-  guessSubmitted.value = ''
+  guessesSubmitted.value = []
 }
 </script>
 
 <template>
   <main>
     <h1 class="title">Wordle</h1>
-    <GuessInput @guessSubmitted="(guess) => (guessSubmitted = guess)" :clearInput="clearInput" />
-    <div v-if="guessSubmitted.length > 0" class="end-of-game">
+    <GuessInput
+      @guessSubmitted="(guess) => guessesSubmitted.push(guess)"
+      :clearInput="clearInput"
+    />
+    <div
+      v-if="guessesSubmitted.length === 6 || guessesSubmitted.includes(wordOfTheDay)"
+      class="end-of-game"
+    >
       <p
-        v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
+        v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
         class="message"
       />
       <button @click="onReset" class="reset-btn">Play again</button>
