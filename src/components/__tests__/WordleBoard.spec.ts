@@ -259,4 +259,13 @@ describe('WordleBoard', () => {
       }
     )
   })
+
+  test('Player can play again after end of game', async () => {
+    await playerTypesAndSubmitsGuess(wordOfTheDay)
+
+    await wrapper.find('button').trigger('click')
+
+    expect(!wrapper.find('img'))
+    expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_GUESSES_COUNT)
+  })
 })

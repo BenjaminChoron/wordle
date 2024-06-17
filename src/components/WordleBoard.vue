@@ -26,6 +26,10 @@ const countOfEmptyGuesses = computed(() => {
   const guessesRemaining = MAX_GUESSES_COUNT - guessesSubmitted.value.length
   return isGameOver.value ? guessesRemaining : guessesRemaining - 1
 })
+
+const resetGame = () => {
+  document.location.reload()
+}
 </script>
 
 <template>
@@ -47,18 +51,17 @@ const countOfEmptyGuesses = computed(() => {
     </ul>
 
     <div v-if="isGameOver" class="layer">
-      <img
-        v-if="isGameOver && guessesSubmitted.includes(wordOfTheDay)"
-        :src="Happy"
-        alt="Happy face"
-        class="end-of-game"
-      />
-      <img
-        v-if="isGameOver && !guessesSubmitted.includes(wordOfTheDay)"
-        :src="Disappointed"
-        alt="Disappointed face"
-        class="end-of-game"
-      />
+      <div class="end-of-game" v-if="isGameOver && guessesSubmitted.includes(wordOfTheDay)">
+        <img :src="Happy" alt="Happy face" class="image" />
+        <p>Great job!</p>
+        <button @click="resetGame" class="reset-game-btn">Play again</button>
+      </div>
+
+      <div class="end-of-game" v-if="isGameOver && !guessesSubmitted.includes(wordOfTheDay)">
+        <img :src="Disappointed" alt="Disappointed face" class="image" />
+        <p>You had to guess: {{ wordOfTheDay }}</p>
+        <button @click="resetGame" class="reset-game-btn">Play again</button>
+      </div>
     </div>
   </main>
 </template>
@@ -96,22 +99,24 @@ li {
   z-index: 2;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100dvh;
-  background-color: hsla(0, 0%, 48%, 0.7);
+  background-color: hsla(0, 0%, 48%, 0.8);
 }
 
 .end-of-game {
-  position: absolute;
-  top: 40%;
   z-index: 10;
-  width: 6rem;
-  height: 6rem;
   opacity: 0;
   font-size: 2rem;
   animation: end-of-game-message-animation 700ms forwards;
   white-space: nowrap;
   text-align: center;
+}
+
+.image {
+  width: 6rem;
+  height: 6rem;
 }
 
 @keyframes end-of-game-message-animation {
