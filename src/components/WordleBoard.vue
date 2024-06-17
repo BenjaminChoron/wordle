@@ -102,7 +102,7 @@ li {
   align-items: center;
   width: 100%;
   height: 100dvh;
-  background-color: hsla(0, 0%, 48%, 0.8);
+  background-color: hsla(0, 0%, 74%, 0.9);
 }
 
 .end-of-game {
@@ -117,6 +117,20 @@ li {
 .image {
   width: 6rem;
   height: 6rem;
+}
+
+.reset-game-btn {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  background-color: hsl(0, 0%, 99%);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+.reset-game-btn:hover {
+  background-color: hsl(0, 0%, 67%);
 }
 
 @keyframes end-of-game-message-animation {
