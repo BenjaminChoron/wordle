@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import GuessInput from '@/components/GuessInput.vue'
-import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE } from '@/settings'
+import { MAX_GUESSES_COUNT } from '@/settings'
 import englishWords from '@/englishWordsWith5Letters.json'
 import GuessView from './GuessView.vue'
+import Happy from '@/assets/happy.svg'
+import Disappointed from '@/assets/disappointed.svg'
 
 const props = defineProps({
   wordOfTheDay: {
@@ -44,11 +46,20 @@ const countOfEmptyGuesses = computed(() => {
       </li>
     </ul>
 
-    <p
-      v-if="isGameOver"
-      v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE"
-      class="message"
-    />
+    <div v-if="isGameOver" class="layer">
+      <img
+        v-if="isGameOver && guessesSubmitted.includes(wordOfTheDay)"
+        :src="Happy"
+        alt="Happy face"
+        class="end-of-game"
+      />
+      <img
+        v-if="isGameOver && !guessesSubmitted.includes(wordOfTheDay)"
+        :src="Disappointed"
+        alt="Disappointed face"
+        class="end-of-game"
+      />
+    </div>
   </main>
 </template>
 
@@ -56,9 +67,12 @@ const countOfEmptyGuesses = computed(() => {
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+NL:wght@100..400&display=swap');
 
 main {
+  width: 100%;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-family: Roboto, sans-serif;
 }
 
@@ -77,18 +91,27 @@ li {
   margin-bottom: 0.25rem;
 }
 
-.message {
+.layer {
   position: absolute;
-  top: 50%;
-  transform: translate(-50%);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100dvh;
+  background-color: hsla(0, 0%, 48%, 0.7);
+}
+
+.end-of-game {
+  position: absolute;
+  top: 40%;
+  z-index: 10;
+  width: 6rem;
+  height: 6rem;
+  opacity: 0;
   font-size: 2rem;
   animation: end-of-game-message-animation 700ms forwards;
   white-space: nowrap;
   text-align: center;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  background-color: hsl(0, 0%, 85%);
-  box-shadow: 0 0 0.5rem 0.25rem rgba(0, 0, 0, 0.3);
 }
 
 @keyframes end-of-game-message-animation {

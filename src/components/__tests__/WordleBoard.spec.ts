@@ -1,7 +1,9 @@
 import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import { DEFEAT_MESSAGE, MAX_GUESSES_COUNT, VICTORY_MESSAGE, WORD_SIZE } from '@/settings'
+import { MAX_GUESSES_COUNT, WORD_SIZE } from '@/settings'
 import GuessView from '../GuessView.vue'
+import Happy from '@/assets/happy.svg'
+import Disappointed from '@/assets/disappointed.svg'
 
 describe('WordleBoard', () => {
   const wordOfTheDay = 'TESTS'
@@ -32,7 +34,7 @@ describe('WordleBoard', () => {
     test('a victory message appears when the user makes a guess that matches the word of the day', async () => {
       await playerTypesAndSubmitsGuess(wordOfTheDay)
 
-      expect(wrapper.text()).toContain(VICTORY_MESSAGE)
+      expect(wrapper.find<HTMLImageElement>('img').element.src).toContain(Happy)
     })
 
     describe.each(
@@ -49,17 +51,16 @@ describe('WordleBoard', () => {
           }
 
           if (shouldSeeDefeatMessage) {
-            expect(wrapper.text()).toContain(DEFEAT_MESSAGE)
+            expect(wrapper.find<HTMLImageElement>('img').element.src).toContain(Disappointed)
           } else {
-            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
+            expect(!wrapper.find('img'))
           }
         })
       }
     )
 
     test('no end-of-game message appears if the user has not yet made a guess', async () => {
-      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
-      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
+      expect(!wrapper.find('img'))
     })
   })
 
@@ -119,20 +120,19 @@ describe('WordleBoard', () => {
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerTypesAndSubmitsGuess(wordOfTheDay + 'EXTRA')
 
-      expect(wrapper.text()).toContain(VICTORY_MESSAGE)
+      expect(wrapper.find<HTMLImageElement>('img').element.src).toContain(Happy)
     })
 
     test('player guesses can only be submitted if they are real English words', async () => {
       await playerTypesAndSubmitsGuess('AZERT')
 
-      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
-      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
+      expect(!wrapper.find('img'))
     })
 
     test('player guesses are not case-sensitive', async () => {
       await playerTypesAndSubmitsGuess(wordOfTheDay.toLowerCase())
 
-      expect(wrapper.text()).toContain(VICTORY_MESSAGE)
+      expect(wrapper.find<HTMLImageElement>('img').element.src).toContain(Happy)
     })
 
     test('player guesses can only contain letters', async () => {
