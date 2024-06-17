@@ -15,10 +15,17 @@ describe('WordleBoard', () => {
     })
   })
 
-  async function playerTypesAndSubmitsGuess(guess: string) {
-    const guessInput = wrapper.find('input[type="text"]')
-    await guessInput.setValue(guess)
-    await guessInput.trigger('keydown.enter')
+  const playerTypesGuess = async (guess: string) => {
+    await wrapper.find('input[type="text"]').setValue(guess)
+  }
+
+  const playerSubmitsGuess = async () => {
+    await wrapper.find('input[type="text"]').trigger('keydown.enter')
+  }
+
+  const playerTypesAndSubmitsGuess = async (guess: string) => {
+    await playerTypesGuess(guess)
+    await playerSubmitsGuess()
   }
 
   describe('End of the game messages', () => {
