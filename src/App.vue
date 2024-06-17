@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import WordleBoard from './components/WordleBoard.vue'
+import englishWords from '@/englishWordsWith5Letters.json'
+
+const wordOfTheDay = englishWords[Math.floor(Math.random() * englishWords.length)]
 </script>
 
 <template>
-  <WordleBoard wordOfTheDay="TESTS" />
+  <WordleBoard :wordOfTheDay="wordOfTheDay" />
 </template>
 
 <style>
