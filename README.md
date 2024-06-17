@@ -1,6 +1,9 @@
-# wordle
+# A “Wordle” on Test-Driven-Development
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a simple implementation of the popular game [Wordle](https://www.powerlanguage.co.uk/wordle/) using Vue 3 and TypeScript. The game is implemented using Test-Driven-Development (TDD) with [Vitest](https://vitest.dev/).
+
+![Start Game](/src/assets/screenshot_start.png)
+![Win Game](/src/assets/screenshot_win.png)
 
 ## Recommended IDE Setup
 
@@ -35,7 +38,7 @@ npm run build
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
-npm run test:unit
+npm run test
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
