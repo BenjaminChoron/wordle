@@ -31,7 +31,7 @@ const countOfEmptyGuesses = computed(() => {
     <h1 class="title">Wordle</h1>
     <ul>
       <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
-        <GuessView :guess="guess" should-flip />
+        <GuessView :answer="wordOfTheDay" :guess="guess" />
       </li>
       <li>
         <guess-input
