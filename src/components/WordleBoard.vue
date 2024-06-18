@@ -59,7 +59,7 @@ const resetGame = () => {
 
       <div class="end-of-game" v-if="isGameOver && !guessesSubmitted.includes(wordOfTheDay)">
         <img :src="Disappointed" alt="Disappointed face" class="image" />
-        <p>You had to guess: {{ wordOfTheDay }}</p>
+        <p>You had to guess: <br />{{ wordOfTheDay }}</p>
         <button @click="resetGame" class="reset-game-btn">Play again</button>
       </div>
     </div>
@@ -75,13 +75,12 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-family: Roboto, sans-serif;
 }
 
 .title {
   font-family: 'Playwrite NL', cursive;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 ul {

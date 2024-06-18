@@ -12,13 +12,14 @@ const qwertyKeysArray = QWERTY_KEYS.split('')
       :aria-label="`Type ${key}`"
       @click="$emit('type', key)"
       class="key"
+      :disabled="key === ' '"
     >
       {{ key }}
     </button>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .virtual-keyboard {
   position: fixed;
   bottom: 1rem;
@@ -33,13 +34,25 @@ const qwertyKeysArray = QWERTY_KEYS.split('')
   width: 1.92rem;
   padding: 0.5rem;
   font-size: 1rem;
+  text-transform: uppercase;
   border: 1px solid #000;
   border-radius: 0.5rem;
   cursor: pointer;
   background-color: #fff;
+  touch-action: manipulation; // prevent zoom when double tapping
   transition: background-color 0.2s;
-}
-.key:hover {
-  background-color: #f0f0f0;
+
+  &:disabled {
+    border: none;
+    cursor: default;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 }
 </style>
